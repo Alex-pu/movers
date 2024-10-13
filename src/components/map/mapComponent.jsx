@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Map, { Marker } from 'react-map-gl';
+import Map, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Import CheckCircleIcon
 import { Snackbar } from '@mui/material'; // Import Snackbar for notifications
@@ -7,6 +7,7 @@ import { Snackbar } from '@mui/material'; // Import Snackbar for notifications
 const MapComponent = ({ onSelectCoordinates }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false); // State for showing the popup
   
   // Track the time of the last click
   const [lastClickTime, setLastClickTime] = useState(0);
@@ -34,6 +35,14 @@ const MapComponent = ({ onSelectCoordinates }) => {
     setLastClickTime(currentTime);
   };
 
+  const handleMarkerClick = () => {
+    setPopupOpen(true);
+  };
+
+  const handlePopupClose = () => {
+    setPopupOpen(false);
+  };
+
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -56,9 +65,21 @@ const MapComponent = ({ onSelectCoordinates }) => {
             longitude={selectedLocation.longitude} 
             latitude={selectedLocation.latitude}
             anchor="bottom" // Anchoring the marker to the bottom
+            onClick={handleMarkerClick}
           >
             <CheckCircleIcon style={{ color: 'green', fontSize: 30 }} /> {/* Checkmark Icon */}
           </Marker>
+        )}
+        {selectedLocation && popupOpen && (
+          <Popup
+            longitude={selectedLocation.longitude}
+            latitude={selectedLocation.latitude}
+            closeButton={true}
+            closeOnClick={false}
+            onClose={handlePopupClose}
+          >
+            <div>You clicked here</div>
+          </Popup>
         )}
       </Map>
       
