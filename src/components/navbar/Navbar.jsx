@@ -35,7 +35,7 @@ const Navbar = () => {
 
     {/* Title */}
     <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', color: '#fff' }}>
-      <span style={{ color: '00bbff' }}>K</span>HAMA MOVERS
+      <span style={{ color: '00bbff' }}>K</span>HAMA
     </Typography>
   </Box>
           {/* Burger Menu Icon for Mobile */}
